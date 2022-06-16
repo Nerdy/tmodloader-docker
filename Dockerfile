@@ -5,12 +5,13 @@ RUN apt-get update && \
     apt-get upgrade -y && \
     apt-get install -y curl nuget vim zip && \
     apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
 
 # fix for favorites.json error
 RUN favorites_path="/root/My Games/Terraria" && mkdir -p "$favorites_path" && echo "{}" > "$favorites_path/favorites.json"
 
 # Download and install Vanilla Server
-ENV TERRARIA_VERSION=1436
+ENV TERRARIA_VERSION=1432
 
 RUN mkdir /tmp/terraria && \
     cd /tmp/terraria && \
@@ -23,12 +24,11 @@ RUN mkdir /tmp/terraria && \
     if [ ! -f /terraria/TerrariaServer ]; then echo "Missing /terraria/TerrariaServer"; exit 1; fi
 
 # Download and install tModLoader
-ENV TMOD_VERSION=2022.05.103.28
+ENV TMOD_VERSION=0.11.8.5
 
 RUN mkdir /tmp/tmod && \
     cd /tmp/tmod &&\
-    curl -sL https://github.com/tModLoader/tModLoader/releases/download/v$TMOD_VERSION/tModLoader.zip --output 
-    tmodloader.zip && \
+    curl -sL https://github.com/tModLoader/tModLoader/releases/download/v$TMOD_VERSION/tModLoader.Linux.v$TMOD_VERSION.zip --output tmodloader.zip && \
     unzip -q tmodloader.zip && \
     rm -R ./tmodloader.zip && \
     cp -r ./* /terraria && \
