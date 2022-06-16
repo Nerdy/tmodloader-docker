@@ -1,5 +1,12 @@
 FROM mono:slim
 
+# Update and install needed utils
+RUN apt-get update && \
+    apt-get upgrade -y && \
+    apt-get install -y curl nuget vim zip && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+
 # fix for favorites.json error
 RUN favorites_path="/root/My Games/Terraria" && mkdir -p "$favorites_path" && echo "{}" > "$favorites_path/favorites.json"
 
@@ -21,7 +28,8 @@ ENV TMOD_VERSION=0.11.8.5
 
 RUN mkdir /tmp/tmod && \
     cd /tmp/tmod &&\
-    curl -sL https://github.com/tModLoader/tModLoader/releases/download/v$TMOD_VERSION/tModLoader.Linux.v$TMOD_VERSION.zip --output tmodloader.zip && \
+    curl -sL https://github.com/tModLoader/tModLoader/releases/download/v$TMOD_VERSION/tModLoader.Linux.v$TMOD_VERSION.zip --output 
+    tmodloader.zip && \
     unzip -q tmodloader.zip && \
     rm -R ./tmodloader.zip && \
     cp -r ./* /terraria && \
