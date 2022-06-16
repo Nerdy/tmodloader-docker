@@ -1,12 +1,5 @@
 FROM mono:slim
 
-# Update and install needed utils
-RUN apt-get update && \
-    apt-get upgrade -y && \
-    apt-get install -y curl nuget vim zip && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/*
-
 # fix for favorites.json error
 RUN favorites_path="/root/My Games/Terraria" && mkdir -p "$favorites_path" && echo "{}" > "$favorites_path/favorites.json"
 
