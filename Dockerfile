@@ -22,13 +22,10 @@ RUN mkdir /tmp/terraria && \
     rm -R /tmp/* && \
     chmod +x /terraria/TerrariaServer* && \
     if [ ! -f /terraria/TerrariaServer ]; then echo "Missing /terraria/TerrariaServer"; exit 1; fi
-
-# Download and install tModLoader
-ENV TMOD_VERSION=2022.05.103.28
-
+    
 RUN mkdir /tmp/tmod && \
     cd /tmp/tmod &&\
-    curl -sL https://github.com/tModLoader/tModLoader/releases/download/v$TMOD_VERSION/tModLoader.zip --output tmodloader.zip && \
+    curl -sL https://github.com/tModLoader/tModLoader/releases/download/v2022.05.103.28/tModLoader.zip --output tmodloader.zip && \
     unzip -q tmodloader.zip && \
     rm -R ./tmodloader.zip && \
     cp -r ./* /terraria && \
